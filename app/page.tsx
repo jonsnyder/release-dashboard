@@ -1,22 +1,35 @@
+'use client';
+
+import { Provider, defaultTheme, Heading, View, Text, Link as SpectrumLink, Flex, Content } from '@adobe/react-spectrum';
+import Workflow from '@spectrum-icons/workflow/Workflow';
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
-        <h1 className="text-4xl font-bold mb-8">
-          Release Automation
-        </h1>
-        <p className="text-lg mb-4">
-          A tool for automating software releases and deployments.
-        </p>
-        <a
-          href="https://github.com/your-username/release-automation"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:text-blue-700"
+    <Provider theme={defaultTheme} colorScheme="light">
+      <View height="100vh" padding="size-1000">
+        <Flex
+          direction="column"
+          gap="size-300"
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
         >
-          View on GitHub
-        </a>
-      </div>
-    </main>
+          <Workflow size="XXL" />
+          <Heading level={1}>Release Automation</Heading>
+          <Content>
+            <Text>A tool for automating software releases and deployments.</Text>
+          </Content>
+          <SpectrumLink>
+            <a
+              href="https://github.com/your-username/release-automation"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on GitHub
+            </a>
+          </SpectrumLink>
+        </Flex>
+      </View>
+    </Provider>
   );
 }
