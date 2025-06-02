@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/exchange.mjs": {
-      "runtime": "edge"
+      "runtime": "@vercel/edge"
     }
   },
   "routes": [
