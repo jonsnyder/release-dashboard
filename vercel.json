@@ -1,6 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "next build",
-  "installCommand": "npm install",
-  "framework": "nextjs"
+  "functions": {
+    "api/exchange.mjs": {
+      "runtime": "edge"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/exchange",
+      "dest": "/api/exchange.mjs"
+    }
+  ],
+  "buildCommand": false,
+  "outputDirectory": false
 }
