@@ -2,8 +2,9 @@
   "name": "release-automation",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
-    "node": ">=16.14.0"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "next dev",
