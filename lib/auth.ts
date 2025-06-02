@@ -17,9 +17,10 @@ export function removeStoredToken(): void {
 }
 
 export function getLoginUrl(): string {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const params = new URLSearchParams({
     client_id: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID || '',
-    redirect_uri: window.location.origin + '/auth/callback',
+    redirect_uri: `${window.location.origin}${basePath}/auth/callback`,
     scope: 'repo read:user',
     state: Math.random().toString(36).substring(7),
   });

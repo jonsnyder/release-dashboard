@@ -5,6 +5,17 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { View, Text } from '@adobe/react-spectrum';
 import { setStoredToken } from '../../../lib/auth';
 
+function checkEnvironmentVariables() {
+  const missingVars = [];
+  if (!process.env.NEXT_PUBLIC_AUTH_PROXY_URL) {
+    missingVars.push('NEXT_PUBLIC_AUTH_PROXY_URL');
+  }
+  if (!process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID) {
+    missingVars.push('NEXT_PUBLIC_GITHUB_CLIENT_ID');
+  }
+  return missingVars;
+}
+
 export default function CallbackPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -12,6 +23,12 @@ export default function CallbackPage() {
 
   useEffect(() => {
     async function exchangeCodeForToken() {
+      const missingVars = checkEnvironmentVariables();
+      if (missingVars.length > 0) {
+        setError(`Missing required environment variables: ${missingVars.join(', ')}. Please check your .env.local file.`);
+        return;
+      }
+
       const code = searchParams.get('code');
       const state = searchParams.get('state');
 
@@ -51,6 +68,9 @@ export default function CallbackPage() {
     return (
       <View padding="size-1000">
         <Text>{error}</Text>
+        <Text marginTop="size-200">
+          <a href="/" style={{ color: 'blue', textDecoration: 'underline' }}>Return to home</a>
+        </Text>
       </View>
     );
   }

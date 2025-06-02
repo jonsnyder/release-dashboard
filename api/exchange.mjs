@@ -2,12 +2,27 @@ export const config = {
   runtime: 'edge'
 };
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 export default async function handler(request) {
+  // Handle preflight requests
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: corsHeaders
+    });
+  }
+
   if (request.method !== 'POST') {
     return new Response(`Method ${request.method} Not Allowed`, {
       status: 405,
       headers: {
-        'Allow': 'POST',
+        ...corsHeaders,
+        'Allow': 'POST, OPTIONS'
       },
     });
   }
@@ -34,9 +49,7 @@ export default async function handler(request) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        ...corsHeaders
       },
     });
   } catch (error) {
@@ -45,9 +58,7 @@ export default async function handler(request) {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        ...corsHeaders
       },
     });
   }
