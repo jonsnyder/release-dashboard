@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Release Automation',
-  description: 'A release automation tool built with Next.js',
+  description: 'GitHub Release Automation Tool',
 };
 
 export default function RootLayout({
