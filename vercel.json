@@ -4,7 +4,9 @@
   "outputDirectory": null,
   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/",
   "functions": {
-    "api/*.mjs": {}
+    "api/*.mjs": {
+      "runtime": "nodejs18.x"
+    }
   },
   "headers": [
     {
