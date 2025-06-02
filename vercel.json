@@ -1,16 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/exchange.mjs": {
-      "runtime": "@vercel/edge"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/exchange",
-      "dest": "/api/exchange.mjs"
-    }
-  ],
   "buildCommand": null,
   "outputDirectory": null
 }

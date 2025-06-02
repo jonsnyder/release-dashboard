@@ -1,10 +1,10 @@
 export const config = {
-  runtime: 'edge',
+  runtime: 'edge'
 };
 
-export default async function handler(req) {
-  if (req.method !== 'POST') {
-    return new Response(`Method ${req.method} Not Allowed`, {
+export default async function handler(request) {
+  if (request.method !== 'POST') {
+    return new Response(`Method ${request.method} Not Allowed`, {
       status: 405,
       headers: {
         'Allow': 'POST',
@@ -12,7 +12,7 @@ export default async function handler(req) {
     });
   }
 
-  const { code, state, client_id } = await req.json();
+  const { code, state, client_id } = await request.json();
 
   try {
     const response = await fetch('https://github.com/login/oauth/access_token', {
@@ -34,6 +34,9 @@ export default async function handler(req) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     });
   } catch (error) {
@@ -42,6 +45,9 @@ export default async function handler(req) {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     });
   }
