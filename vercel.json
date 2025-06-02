@@ -11,6 +11,6 @@
       "dest": "/api/exchange.mjs"
     }
   ],
-  "buildCommand": false,
-  "outputDirectory": false
+  "buildCommand": null,
+  "outputDirectory": null
 }

@@ -96,58 +96,20 @@ This separation allows us to maintain a static site while securely handling GitH
 
 ### 4. Production Deployment (GitHub Pages)
 
-1. Update `next.config.mjs`:
+The repository is already configured for GitHub Pages deployment with:
 
-   ```javascript
-   const isProduction = process.env.NODE_ENV === "production";
-   const basePath = isProduction ? "/release-automation" : "";
+- `next.config.mjs` configured for static export with the correct base path
+- GitHub Actions workflow in `.github/workflows/deploy.yml` for automatic deployments
 
-   const nextConfig = {
-     output: "export",
-     basePath,
-     assetPrefix: basePath,
-     images: {
-       unoptimized: true,
-     },
-     trailingSlash: true,
-   };
+To deploy:
 
-   export default nextConfig;
-   ```
-
-2. Create `.github/workflows/deploy.yml`:
-
-   ```yaml
-   name: Deploy to GitHub Pages
-
-   on:
-     push:
-       branches: [main]
-
-   jobs:
-     build-and-deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v2
-         - uses: actions/setup-node@v2
-           with:
-             node-version: "18"
-         - run: npm ci
-         - run: npm run build
-         - name: Deploy to GitHub Pages
-           uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./out
-   ```
-
-3. Enable GitHub Pages in your repository settings:
+1. Enable GitHub Pages in your repository settings:
 
    - Go to Settings > Pages
    - Source: Deploy from a branch
    - Branch: gh-pages
 
-4. Update environment variables in GitHub repository settings:
+2. Update environment variables in GitHub repository settings:
 
    - Go to Settings > Secrets and variables > Actions
    - Add the following variables:
@@ -156,12 +118,14 @@ This separation allows us to maintain a static site while securely handling GitH
      NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
      ```
 
-5. Push to main branch to trigger deployment:
+3. Push to main branch to trigger deployment:
    ```bash
    git add .
-   git commit -m "Configure GitHub Pages deployment"
+   git commit -m "Update environment variables"
    git push
    ```
+
+The application will be available at `https://jonsnyder.github.io/release-automation` after the GitHub Actions workflow completes.
 
 ## Development Workflow
 
