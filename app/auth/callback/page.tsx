@@ -42,7 +42,7 @@ export default function CallbackPage() {
           // Clean up the URL and ensure no trailing slash
           const baseUrl = process.env.NEXT_PUBLIC_AUTH_PROXY_URL.replace(/\/+$/, '');
 
-          const response = await fetch(`${baseUrl}/exchange`, {
+          const response = await fetch(`${baseUrl}/exchange.js`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
