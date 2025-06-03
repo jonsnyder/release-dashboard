@@ -1,8 +1,14 @@
 {
-  "buildCommand": null,
+  "buildCommand": "echo 'Skipping build - functions only'",
   "outputDirectory": null,
+  "installCommand": "npm install",
   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json package.json package-lock.json",
   "trailingSlash": false,
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "headers": [
     {
       "source": "/api/(.*)",

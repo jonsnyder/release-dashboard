@@ -1,5 +1,3 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-
 const corsHeaders = {
   'Access-Control-Allow-Credentials': 'true',
   'Access-Control-Allow-Origin': '*',

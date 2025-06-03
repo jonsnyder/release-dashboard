@@ -18,8 +18,7 @@
     "react-dom": "^18.2.0",
     "@adobe/react-spectrum": "^3.32.0",
     "@spectrum-icons/workflow": "^4.2.7",
-    "@octokit/rest": "^20.0.2",
-    "@vercel/node": "^3.0.0"
+    "@octokit/rest": "^20.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
