@@ -1,9 +1,16 @@
 {
-  "buildCommand": "echo 'Skipping build - functions only'",
+  "framework": null,
+  "buildCommand": null,
   "outputDirectory": null,
   "installCommand": "npm install",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json package.json package-lock.json .vercelignore",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json package.json package-lock.json .vercelignore || exit 0",
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
