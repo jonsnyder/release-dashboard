@@ -4,9 +4,7 @@
   "outputDirectory": null,
   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json",
   "functions": {
-    "api/*.mjs": {
-      "runtime": "nodejs@18.x"
-    }
+    "api/*.mjs": null
   },
   "headers": [
     {
