@@ -1,7 +1,3 @@
-export const config = {
-  runtime: 'nodejs'
-};
-
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 const corsHeaders = {
