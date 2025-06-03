@@ -1,9 +1,8 @@
 {
   "framework": null,
-  "buildCommand": null,
-  "outputDirectory": null,
+  "buildCommand": "echo 'No build needed - functions only'",
+  "outputDirectory": ".",
   "installCommand": "npm install",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json package.json package-lock.json .vercelignore || exit 0",
   "trailingSlash": false,
   "rewrites": [
     {
