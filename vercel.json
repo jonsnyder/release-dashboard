@@ -2,7 +2,7 @@
   "buildCommand": null,
   "outputDirectory": null,
   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./api/ vercel.json",
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
     {
@@ -15,7 +15,14 @@
       ]
     }
   ],
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" }
+  "routes": [
+    {
+      "src": "/api/exchange",
+      "dest": "/api/exchange.mjs"
+    },
+    {
+      "src": "/api/exchange/",
+      "dest": "/api/exchange.mjs"
+    }
   ]
 }

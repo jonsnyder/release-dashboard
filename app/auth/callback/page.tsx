@@ -34,8 +34,15 @@ export default function CallbackPage() {
 
       if (code) {
         try {
-          // Exchange code for token using a proxy server
-          const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_PROXY_URL}/exchange`, {
+          // Ensure we have the auth proxy URL
+          if (!process.env.NEXT_PUBLIC_AUTH_PROXY_URL) {
+            throw new Error('Auth proxy URL is not configured');
+          }
+
+          // Clean up the URL and ensure no trailing slash
+          const baseUrl = process.env.NEXT_PUBLIC_AUTH_PROXY_URL.replace(/\/+$/, '');
+
+          const response = await fetch(`${baseUrl}/exchange`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -47,17 +54,24 @@ export default function CallbackPage() {
             }),
           });
 
-          if (!response.ok) {
-            throw new Error('Failed to exchange code for token');
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error_description || data.error);
           }
 
-          const data = await response.json();
+          if (!data.access_token) {
+            throw new Error('No access token received');
+          }
+
           setStoredToken(data.access_token);
           router.push('/');
         } catch (err) {
           console.error('Error exchanging code for token:', err);
-          setError('Failed to authenticate with GitHub. Please try again.');
+          setError(`Authentication failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
         }
+      } else {
+        setError('No authentication code received');
       }
     }
 
