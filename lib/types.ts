@@ -26,6 +26,49 @@ export interface GitHubCommit {
   };
 }
 
+export interface GitHubPullRequest {
+  number: number;
+  title: string;
+  user: {
+    login: string;
+    name?: string;
+  };
+  created_at: string;
+  updated_at: string;
+  html_url: string;
+  merged_at: string | null;
+  deployedVersion?: string;
+  labels: Array<{
+    name: string;
+    color: string;
+  }>;
+}
+
+export interface GitHubRelease {
+  tag_name: string;
+  name: string;
+  published_at: string;
+  prerelease: boolean;
+  draft: boolean;
+  body: string;
+}
+
+export interface VersionInfo {
+  current: string;
+  previousStable: string | null;
+  packageJsonPath: string;
+}
+
+export interface ReleaseNotesSection {
+  title: string;
+  prs: GitHubPullRequest[];
+}
+
+export interface ParsedReleaseNotes {
+  sections: ReleaseNotesSection[];
+  unmentionedPRs: GitHubPullRequest[];
+}
+
 export interface RepoDetails {
   branch: {
     name: string;
@@ -34,4 +77,9 @@ export interface RepoDetails {
     };
   };
   recentCommits: GitHubCommit[];
+  unreleasedPRs: GitHubPullRequest[];
+  openPRs: GitHubPullRequest[];
+  versionInfo: VersionInfo;
+  releases: GitHubRelease[];
+  parsedReleaseNotes?: ParsedReleaseNotes;
 }
