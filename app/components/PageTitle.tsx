@@ -32,28 +32,14 @@ export function PageTitle({ owner, repo, branch, defaultBranch }: PageTitleProps
   }
 
   return (
-    <div>
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          .github-title-link {
-            color: inherit !important;
-            text-decoration: none !important;
-          }
-          .github-title-link:hover {
-            text-decoration: underline !important;
-          }
-        `
-      }} />
-      <Heading level={1}>
-        <Link
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          UNSAFE_className="github-title-link"
-        >
-          {title}
-        </Link>
-      </Heading>
-    </div>
+    <Heading level={1}>
+      <Link
+        href={githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {title}
+      </Link>
+    </Heading>
   );
 }

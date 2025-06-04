@@ -46,7 +46,9 @@ export function PRTable({ prs, keyPrefix = '' }: PRTableProps) {
               {pr.deployedVersion ? (
                 <Text>{pr.deployedVersion}</Text>
               ) : (
-                <span style={{ fontStyle: 'italic', color: '#666' }}>Not released</span>
+                <Text UNSAFE_style={{ fontStyle: 'italic', color: 'var(--spectrum-global-color-gray-600)' }}>
+                  Not released
+                </Text>
               )}
             </Cell>
             <Cell>

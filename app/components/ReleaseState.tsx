@@ -1,4 +1,4 @@
-import { View, Heading, Divider, Text, Flex, Button, ButtonGroup, Well } from '@adobe/react-spectrum';
+import { View, Heading, Divider, Text, Flex, Button, ButtonGroup, Badge } from '@adobe/react-spectrum';
 import { VersionInfo as VersionInfoType } from '../../lib/types';
 
 interface ReleaseStateProps {
@@ -61,30 +61,10 @@ export function ReleaseState({ versionInfo, onInitializeRelease, onCompleteRelea
         <Flex direction="row" alignItems="center" gap="size-200">
           <Text><strong>Current Version:</strong> {releaseState.currentVersion}</Text>
           {releaseState.isReleaseInProgress && (
-            <div style={{
-              backgroundColor: '#f59e0b',
-              color: 'white',
-              padding: '4px 12px',
-              borderRadius: '16px',
-              fontSize: '14px',
-              fontWeight: '600',
-              display: 'inline-block',
-            }}>
-              Beta in Progress
-            </div>
+            <Badge variant="yellow">Beta in Progress</Badge>
           )}
           {!releaseState.isReleaseInProgress && (
-            <div style={{
-              backgroundColor: '#10b981',
-              color: 'white',
-              padding: '4px 12px',
-              borderRadius: '16px',
-              fontSize: '14px',
-              fontWeight: '600',
-              display: 'inline-block',
-            }}>
-              Stable
-            </div>
+            <Badge variant="positive">Stable</Badge>
           )}
         </Flex>
 
