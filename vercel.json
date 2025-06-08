@@ -1,4 +1,10 @@
 {
+  "version": 2,
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": null,
+  "installCommand": "npm install --production",
+  "builds": [],
   "headers": [
     {
       "source": "/api/(.*)",
