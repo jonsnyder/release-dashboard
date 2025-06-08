@@ -1,169 +1,143 @@
-# Release Automation Dashboard
+# Release Automation Tool
 
-A GitHub release automation dashboard built with Next.js and React Spectrum. This application uses GitHub's OAuth for authentication and provides a clean interface for managing repository releases.
+A React application for automating GitHub repository release management with React Spectrum UI components.
 
-## Architecture
+## �� Features
 
-The application is split into two parts:
+- GitHub OAuth authentication with secure token exchange
+- Repository branch and release management
+- Release notes generation
+- Pull request tracking
+- Modern React 19 + TypeScript + Vite stack
 
-1. A static Next.js application hosted on GitHub Pages
-2. A serverless authentication proxy hosted on Vercel
+## 🛠️ Development Setup
 
-This separation allows us to maintain a static site while securely handling GitHub OAuth authentication.
+### Prerequisites
 
-## Prerequisites
+- Node.js 20+ (managed with `.nvmrc`)
+- npm
 
-- Node.js 18.x
-- npm 8.x or later
-- A GitHub account
-- A Vercel account
+### Getting Started
 
-## Setup Instructions
+```bash
+# Use the correct Node version
+nvm use
 
-### 1. GitHub OAuth Application
+# Install dependencies
+npm install
 
-1. Go to GitHub Settings > Developer Settings > OAuth Apps > New OAuth App
-2. Fill in the application details:
-   - Application name: `Release Automation` (or your preferred name)
-   - Homepage URL:
-     - Development: `http://localhost:3000`
-     - Production: `https://jonsnyder.github.io/release-automation`
-   - Authorization callback URL:
-     - Development: `http://localhost:3000/auth/callback`
-     - Production: `https://jonsnyder.github.io/release-automation/auth/callback`
-3. Click "Register application"
-4. Note down the Client ID
-5. Generate a new client secret and note it down (you won't be able to see it again)
+# Start development server
+npm run dev
+```
 
-### 2. Vercel Authentication Proxy
+The app will be available at `http://localhost:5173`
 
-1. Fork or clone this repository
-2. Install the Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
-3. Deploy the authentication proxy:
-   ```bash
-   vercel
-   ```
-4. When prompted:
+## 🌐 GitHub Pages Deployment
 
-   - Set up and deploy "api"? Yes
-   - Which scope? Choose your preferred scope
-   - Link to existing project? No
-   - What's your project name? release-automation-auth (or your preference)
-   - In which directory is your code located? ./api
+This app uses a secure OAuth flow with a Vercel backend for token exchange.
 
-5. Add environment variables in the Vercel dashboard:
-   - Go to your project settings
-   - Add the following environment variables:
-     ```
-     GITHUB_CLIENT_ID=your_client_id_here
-     GITHUB_CLIENT_SECRET=your_client_secret_here
-     ```
+### Authentication Flow
 
-### 3. Local Development Setup
+1. User clicks "Sign in with GitHub"
+2. Redirects to GitHub OAuth authorization
+3. GitHub redirects back to `/auth/callback` with authorization code
+4. App calls Vercel API (`VITE_AUTH_PROXY_URL`) to exchange code for access token
+5. Token is stored in localStorage and user is redirected back to their original location
 
-1. Clone the repository:
+### Environment Variables
 
-   ```bash
-   git clone https://github.com/jonsnyder/release-automation.git
-   cd release-automation
-   ```
+Set these environment variables for your deployment:
 
-2. Install dependencies:
+- `VITE_GITHUB_CLIENT_ID`: Your GitHub OAuth app client ID
+- `VITE_AUTH_PROXY_URL`: URL to your Vercel API endpoint (e.g., `https://release-dashboard.vercel.app/api`)
+- `VITE_BASE_PATH`: Deployment base path (optional, defaults to `/release-automation`)
 
-   ```bash
-   npm install
-   ```
+### Deployment
 
-3. Create a `.env.local` file:
+1. **Configure environment variables** in your GitHub repository:
 
-   ```
-   NEXT_PUBLIC_AUTH_PROXY_URL=your_vercel_deployment_url/api
-   NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
-   ```
+   - Go to Settings → Secrets and variables → Actions
+   - Add the environment variables above
 
-   Replace the values with your actual Vercel deployment URL and GitHub OAuth app client ID.
+2. **Push to main branch** - GitHub Actions will automatically:
 
-4. Start the development server:
+   - Build the app with Node 20
+   - Deploy to GitHub Pages
 
-   ```bash
-   npm run dev
-   ```
+3. **Configure GitHub Pages**:
 
-5. Open http://localhost:3000 in your browser
+   - Go to repository Settings > Pages
+   - Set source to "GitHub Actions"
 
-### 4. Production Deployment (GitHub Pages)
+4. **Access your app** at: `https://yourusername.github.io/release-automation/`
 
-The repository is already configured for GitHub Pages deployment with:
+## 📁 Project Structure
 
-- `next.config.mjs` configured for static export with the correct base path
-- GitHub Actions workflow in `.github/workflows/deploy.yml` for automatic deployments
+```
+src/
+├── components/        # React Spectrum UI components
+├── pages/            # Route components
+│   ├── HomePage.tsx
+│   ├── RepoPage.tsx
+│   └── AuthCallback.tsx
+├── lib/              # Utilities and hooks
+│   ├── hooks/        # Custom React hooks
+│   ├── types.ts      # TypeScript type definitions
+│   ├── auth.ts       # Authentication logic
+│   └── github.ts     # GitHub API client
+└── main.tsx          # App entry point
+```
 
-To deploy:
+## 🔧 Local Development Environment
 
-1. Enable GitHub Pages in your repository settings:
+Create a `.env.local` file for local development:
 
-   - Go to Settings > Pages
-   - Source: Deploy from a branch
-   - Branch: gh-pages
+```env
+VITE_GITHUB_CLIENT_ID=your_github_oauth_client_id
+VITE_AUTH_PROXY_URL=https://release-dashboard.vercel.app/api
+VITE_BASE_PATH=
+```
 
-2. Update environment variables in GitHub repository settings:
+## 🏗️ Build
 
-   - Go to Settings > Secrets and variables > Actions
-   - Add the following variables:
-     ```
-     NEXT_PUBLIC_AUTH_PROXY_URL=your_vercel_deployment_url/api
-     NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
-     ```
+```bash
+# Production build
+npm run build
 
-3. Push to main branch to trigger deployment:
-   ```bash
-   git add .
-   git commit -m "Update environment variables"
-   git push
-   ```
+# Preview production build
+npm run preview
+```
 
-The application will be available at `https://jonsnyder.github.io/release-automation` after the GitHub Actions workflow completes.
+## 📝 Tech Stack
 
-## Development Workflow
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 6
+- **UI Library**: Adobe React Spectrum
+- **Routing**: React Router 7 (Hash Router for GitHub Pages)
+- **Authentication**: GitHub OAuth with Vercel backend
+- **Deployment**: GitHub Pages with GitHub Actions
 
-1. Make changes to the code
-2. Test locally using `npm run dev`
-3. Commit and push changes
-4. GitHub Actions will automatically deploy to GitHub Pages
-5. Vercel will automatically deploy API changes
+## 🔐 Security
 
-## Troubleshooting
+- Client secrets are kept secure on the Vercel backend
+- Authorization codes are exchanged for tokens server-side
+- Access tokens are stored in localStorage (consider using secure storage for production)
+- Return URLs are preserved through the OAuth flow
 
-### Common Issues
+## 🚧 Migration from Next.js
 
-1. OAuth Error (404):
+This project was migrated from Next.js to resolve React Spectrum hydration issues. The new Vite-based setup provides:
 
-   - Check that your GitHub OAuth app URLs match your deployment URLs
-   - Verify environment variables are set correctly
+- ✅ No SSR hydration conflicts
+- ✅ Faster development with HMR
+- ✅ Perfect GitHub Pages compatibility
+- ✅ Modern React 19 features
+- ✅ Secure OAuth flow with backend token exchange
 
-2. Authentication Failed:
+## 🤝 Contributing
 
-   - Check browser console for errors
-   - Verify Vercel environment variables
-   - Check GitHub OAuth app settings
-
-3. Build Errors:
-   - Make sure Node.js version is 18.x
-   - Clear `.next` directory and node_modules
-   - Run `npm ci` instead of `npm install`
-
-### Getting Help
-
-If you encounter issues:
-
-1. Check the browser console for errors
-2. Look at Vercel function logs
-3. Review GitHub Actions build logs
-4. Open an issue in the repository
-
-## License
-
-MIT License - see LICENSE file for details
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test locally with `npm run dev`
+5. Submit a pull request
