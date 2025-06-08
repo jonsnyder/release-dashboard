@@ -1,6 +1,4 @@
-app/
-.next/
-out/
+lib/
 *.log
 README.md
 .github/

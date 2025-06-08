@@ -1,9 +1,4 @@
 {
-  "framework": null,
-  "buildCommand": "mkdir -p build",
-  "outputDirectory": "build",
-  "installCommand": "npm install",
-  "trailingSlash": false,
   "headers": [
     {
       "source": "/api/(.*)",
