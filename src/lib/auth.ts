@@ -25,7 +25,7 @@ export function getLoginUrl(returnUrl?: string): string {
 
   const params = new URLSearchParams({
     client_id: clientId,
-    redirect_uri: `${window.location.origin}${basePath}/auth/redirect.html`,
+    redirect_uri: `${window.location.origin}${basePath}/#/auth/callback`,
     scope: 'repo',
     state: encodeURIComponent(currentUrl), // Store return URL in state
   });
